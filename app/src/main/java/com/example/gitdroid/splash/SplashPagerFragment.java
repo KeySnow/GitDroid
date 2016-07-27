@@ -105,7 +105,7 @@ public class SplashPagerFragment extends Fragment {
                 layoutPhone.setScaleX(scale);
                 layoutPhone.setScaleY(scale);
                 //手机的平移处理
-                int scroll = (int) ((positionOffset - 1) * 360);
+                int scroll = (int) ((positionOffset - 1) * 180);
                 layoutPhone.setTranslationX(scroll);
                 //手机字体的渐变
                 ivPhoneFont.setAlpha(positionOffset);
