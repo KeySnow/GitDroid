@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.gitdroid.MainActivity;
 import com.example.gitdroid.R;
 import com.example.gitdroid.commons.ActivityUtils;
+import com.example.gitdroid.login.LoginActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -33,7 +34,8 @@ public class SplashActivity extends AppCompatActivity {
     //登陆
     @OnClick(R.id.btnLogin)
     public void login(){
-
+        activityUtils.startActivity(LoginActivity.class);
+        finish();
     }
 
     //直接进入

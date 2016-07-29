@@ -10,8 +10,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 
+import com.example.gitdroid.commons.ActivityUtils;
 import com.example.gitdroid.hotrepo.HotRepoFragment;
+import com.example.gitdroid.login.LoginActivity;
+import com.example.gitdroid.login.UserRepo;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,9 +40,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //热门仓库Fragment
     private HotRepoFragment hotRepoFragment;
 
+    private Button btnLogin;
+    private ImageView ivIcon;
+
+    private ActivityUtils activityUtils;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activityUtils = new ActivityUtils(this);
         //设置当前视图（也就是说，更改了当前视图内容，将导致onContentChanged方法触发）
         setContentView(R.layout.activity_main);
 
@@ -57,10 +70,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         //设置抽屉监听
         drawerLayout.addDrawerListener(toggle);
-
+        btnLogin = ButterKnife.findById(navigationView.getHeaderView(0), R.id.btnLogin);
+        ivIcon = ButterKnife.findById(navigationView.getHeaderView(0), R.id.ivIcon);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityUtils.startActivity(LoginActivity.class);
+                finish();
+            }
+        });
         //默认显示的是热门仓库Fragment
         hotRepoFragment = new HotRepoFragment();
         replaceFragment(hotRepoFragment);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //没有授权的话
+        if (UserRepo.isEmpty()){
+            btnLogin.setText(R.string.login_github);
+            return;
+        }
+        btnLogin.setText(R.string.switch_account);
+        //设置title
+        getSupportActionBar().setTitle(UserRepo.getUser().getLogin());
+        //设置用户头像
+        String photoUrl = UserRepo.getUser().getAvatar();
+        ImageLoader.getInstance().displayImage(photoUrl, ivIcon);
     }
 
     private void replaceFragment(Fragment fragment) {

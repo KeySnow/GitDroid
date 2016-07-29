@@ -4,8 +4,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.gitdroid.hotrepo.repolist.view.RepoListView;
-import com.example.gitdroid.network.GitHubApi;
-import com.example.gitdroid.network.GitHubClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,10 +27,10 @@ public class RepoListPresenter {
 
     //下拉刷新处理
     public void refresh() {
-        GitHubClient gitHubClient = new GitHubClient();
-        GitHubApi gitHubApi = gitHubClient.getGitHubApi();
-        Call<ResponseBody> call = gitHubApi.getRetrofitContributors();
-        call.enqueue(refreshCallback);//异步执行
+//        GitHubClient gitHubClient = new GitHubClient();
+//        GitHubApi gitHubApi = gitHubClient.getGitHubApi();
+//        Call<ResponseBody> call = gitHubApi.getRetrofitContributors();
+//        call.enqueue(refreshCallback);//异步执行
     }
 
     private final Callback<ResponseBody> refreshCallback = new Callback<ResponseBody>() {
