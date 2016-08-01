@@ -23,7 +23,7 @@
         android:id="@+id/ivIcon"
         android:layout_width="@dimen/dp_50"
         android:layout_height="@dimen/dp_50"
-        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_3"
         android:layout_alignRight="@+id/btnSearch"
         android:layout_alignParentTop="true"
         android:layout_marginTop="@dimen/dp_20"

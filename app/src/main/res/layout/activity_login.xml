@@ -12,6 +12,7 @@
         app:title="@string/login_github"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
+    <!--用来授权登陆页面-->
     <WebView
         android:layout_below="@+id/toolbar"
         android:id="@+id/webView"

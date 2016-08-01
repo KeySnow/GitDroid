@@ -2,11 +2,13 @@ package com.example.gitdroid.login.modle;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * 个人用户信息响应结果
  * Created by 93432 on 2016/7/29.
  */
-public class User {
+public class User implements Serializable{
 //    {
 //        "login": "octocat",
 //            "id": 1,

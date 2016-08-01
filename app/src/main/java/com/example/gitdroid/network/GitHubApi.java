@@ -1,14 +1,21 @@
 package com.example.gitdroid.network;
 
+import com.example.gitdroid.hotrepo.repolist.modle.RepoResult;
 import com.example.gitdroid.login.modle.AccessTokenResult;
 import com.example.gitdroid.login.modle.User;
+import com.example.gitdroid.repoinfo.RepoContentResult;
 
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Retrofit能将标准的reset接口，用java接口来描述（通过注解）
@@ -36,6 +43,37 @@ public interface GitHubApi {
             @Field("code") String code
     );
 
+    /**
+     * 获取用户信息
+     * @return
+     */
     @GET("user")
     Call<User> getUserInfo();
+
+    /**
+     * 获取仓库
+     * @param query 查询参数（language:java）
+     * @param pageId 查询页参数（从1开始）
+     * @return
+     */
+    @GET("/search/repositories")
+    Call<RepoResult> searchRepo(@Query("q") String query, @Query("page") int pageId);
+
+    /**
+     * 获取readme
+     * @param owner 仓库拥有者
+     * @param repo 仓库名称
+     * @return 仓库的readme页面内容，将是markdown格式且做了Base64处理
+     */
+    @GET("/repos/{owner}/{repo}/readme")
+    Call<RepoContentResult> getReadme(@Path("owner") String owner, @Path("repo") String repo);
+
+    /**
+     * 获取一个markdown内容对应的html页面
+     * @param body 请求体，内容来自getReadme后的RepoContentResult
+     * @return
+     */
+    @Headers({"Content-Type: text/plain"})
+    @POST("/markdown/raw")
+    Call<ResponseBody> markDown(@Body RequestBody body);
 }

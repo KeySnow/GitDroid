@@ -1,4 +1,4 @@
-package com.example.gitdroid.hotrepo;
+package com.example.gitdroid.hotrepo.repolist;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,19 +6,20 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.gitdroid.R;
 import com.example.gitdroid.commons.ActivityUtils;
 import com.example.gitdroid.components.FooterView;
-import com.example.gitdroid.hotrepo.repolist.RepoListPresenter;
+import com.example.gitdroid.hotrepo.Language;
+import com.example.gitdroid.hotrepo.repolist.modle.Repo;
 import com.example.gitdroid.hotrepo.repolist.view.RepoListView;
+import com.example.gitdroid.repoinfo.RepoInfoActivity;
 import com.mugen.Mugen;
 import com.mugen.MugenCallbacks;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -44,13 +45,27 @@ public class RepoListFragment extends Fragment implements RepoListView {
     @BindView(R.id.ptrClassicFrameLayout)
     PtrClassicFrameLayout ptrFrameLayout;
 
-    private ArrayAdapter<String> adapter;
+    private RepoListAdapter adapter;
     //用来做当前页面业务逻辑及视图更新的
     private RepoListPresenter presenter;
     //上拉加载更多的视图
     private FooterView footerView;
 
     private ActivityUtils activityUtils;
+
+    private static final String KEY_LANGUAGE = "kay_language";
+
+    public static RepoListFragment getInstance(Language language){
+        RepoListFragment fragment = new RepoListFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(KEY_LANGUAGE, language);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    private Language getLanguage(){
+        return (Language)getArguments().getSerializable(KEY_LANGUAGE);
+    }
 
     @Nullable
     @Override
@@ -63,13 +78,16 @@ public class RepoListFragment extends Fragment implements RepoListView {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         activityUtils = new ActivityUtils(this);
-        presenter = new RepoListPresenter(this);
-        adapter = new ArrayAdapter<String>(
-                getContext(),
-                android.R.layout.simple_list_item_1,
-                new ArrayList<String>()
-        );
+        presenter = new RepoListPresenter(this, getLanguage());
+        adapter = new RepoListAdapter();
         listView.setAdapter(adapter);
+        //按下某个仓库后，进入此仓库详情
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                RepoInfoActivity.open(getContext(), adapter.getItem(position));
+            }
+        });
         //初始下拉刷新
         initPullToRefresh();
         //初始上拉加载更多
@@ -163,10 +181,9 @@ public class RepoListFragment extends Fragment implements RepoListView {
     //刷新数据
     //将后台线程更新加载到的数据，刷新显示到视图(ListView)上来显示给用户看
     @Override
-    public void refreshData(List<String> data){
+    public void refreshData(List<Repo> data){
         adapter.clear();
         adapter.addAll(data);
-        adapter.notifyDataSetChanged();
     }
 
     //上拉加载更多视图实现----------------------------------
@@ -192,8 +209,7 @@ public class RepoListFragment extends Fragment implements RepoListView {
     }
 
     @Override
-    public void addMoreData(List<String> datas) {
+    public void addMoreData(List<Repo> datas) {
         adapter.addAll(datas);
-        adapter.notifyDataSetChanged();
     }
 }

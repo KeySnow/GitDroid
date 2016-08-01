@@ -1,5 +1,7 @@
 package com.example.gitdroid.hotrepo.repolist.view;
 
+import com.example.gitdroid.hotrepo.repolist.modle.Repo;
+
 import java.util.List;
 
 /**
@@ -14,5 +16,5 @@ public interface RepoListLoadMoreView {
 
     void showLoadMoreError(String errorMsg);
 
-    void addMoreData(List<String> datas);
+    void addMoreData(List<Repo> datas);
 }
