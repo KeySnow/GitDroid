@@ -3,10 +3,10 @@ package com.example.gitdroid.splash;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.gitdroid.MainActivity;
+import com.example.gitdroid.github.MainActivity;
 import com.example.gitdroid.R;
 import com.example.gitdroid.commons.ActivityUtils;
-import com.example.gitdroid.login.LoginActivity;
+import com.example.gitdroid.github.login.LoginActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
