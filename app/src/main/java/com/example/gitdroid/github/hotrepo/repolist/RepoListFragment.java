@@ -13,6 +13,10 @@ import android.widget.TextView;
 import com.example.gitdroid.R;
 import com.example.gitdroid.commons.ActivityUtils;
 import com.example.gitdroid.components.FooterView;
+import com.example.gitdroid.favorite.dao.DBHelp;
+import com.example.gitdroid.favorite.dao.LocalRepoDao;
+import com.example.gitdroid.favorite.model.LocalRepo;
+import com.example.gitdroid.favorite.model.RepoConverter;
 import com.example.gitdroid.github.hotrepo.Language;
 import com.example.gitdroid.github.hotrepo.repolist.modle.Repo;
 import com.example.gitdroid.github.hotrepo.repolist.view.RepoListView;
@@ -88,6 +92,19 @@ public class RepoListFragment extends Fragment implements RepoListView {
                 RepoInfoActivity.open(getContext(), adapter.getItem(position));
             }
         });
+        //长按某个仓库后，加入收藏
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                //热门仓库列表上的Repo
+                Repo repo = adapter.getItem(position);
+                LocalRepo localRepo = RepoConverter.convert(repo);
+                //添加到本地仓库中去（只认本地仓库实体LocalRepo）
+                new LocalRepoDao(DBHelp.getInstance(getContext())).createOrUpdate(localRepo);
+                activityUtils.showToast("收藏成功！");
+                return true;
+            }
+        });
         //初始下拉刷新
         initPullToRefresh();
         //初始上拉加载更多
@@ -145,7 +162,7 @@ public class RepoListFragment extends Fragment implements RepoListView {
         });
         //以下代码只是修改了header样式
         StoreHouseHeader header = new StoreHouseHeader(getContext());
-        header.initWithString("I LIKE " + " JAVA");
+        header.initWithString("I LIKE " + getLanguage().getName());
         header.setPadding(0,60,0,60);
         //修改Ptr的HeaderView效果
         ptrFrameLayout.setHeaderView(header);
