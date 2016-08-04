@@ -17,6 +17,7 @@ import android.widget.ImageView;
 
 import com.example.gitdroid.R;
 import com.example.gitdroid.commons.ActivityUtils;
+import com.example.gitdroid.favorite.FavoriteFragment;
 import com.example.gitdroid.github.hotrepo.HotRepoFragment;
 import com.example.gitdroid.github.hotuser.HotUserFragment;
 import com.example.gitdroid.github.login.LoginActivity;
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private HotRepoFragment hotRepoFragment;
     //热门开发者Fragment
     private HotUserFragment hotUserFragment;
+    //我的收藏Fragment
+    private FavoriteFragment favoriteFragment;
 
     private Button btnLogin;
     private ImageView ivIcon;
@@ -132,6 +135,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (hotUserFragment == null) hotUserFragment = new HotUserFragment();
                 if (!hotUserFragment.isAdded()){
                     replaceFragment(hotUserFragment);
+                }
+                break;
+            case R.id.arsenal_my_repo:
+                if (favoriteFragment == null) favoriteFragment = new FavoriteFragment();
+                if (!favoriteFragment.isAdded()){
+                    replaceFragment(favoriteFragment);
                 }
                 break;
         }
