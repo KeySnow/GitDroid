@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import com.example.gitdroid.R;
 import com.example.gitdroid.commons.ActivityUtils;
 import com.example.gitdroid.favorite.FavoriteFragment;
+import com.example.gitdroid.gank.GankFragment;
 import com.example.gitdroid.github.hotrepo.HotRepoFragment;
 import com.example.gitdroid.github.hotuser.HotUserFragment;
 import com.example.gitdroid.github.login.LoginActivity;
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private HotUserFragment hotUserFragment;
     //我的收藏Fragment
     private FavoriteFragment favoriteFragment;
+    //每日干货Fragment
+    private GankFragment gankFragment;
 
     private Button btnLogin;
     private ImageView ivIcon;
@@ -141,6 +144,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (favoriteFragment == null) favoriteFragment = new FavoriteFragment();
                 if (!favoriteFragment.isAdded()){
                     replaceFragment(favoriteFragment);
+                }
+                break;
+            case R.id.tips_daily:
+                if (gankFragment == null) gankFragment = new GankFragment();
+                if (!gankFragment.isAdded()){
+                    replaceFragment(gankFragment);
                 }
                 break;
         }

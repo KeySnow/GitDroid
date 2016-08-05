@@ -3,41 +3,60 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvDate"
+    <RelativeLayout
+        android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"
-        android:layout_alignParentTop="true"
-        android:background="?attr/colorPrimary"
-        android:gravity="left|center_vertical"
-        android:paddingLeft="@dimen/dp_20"
-        android:paddingRight="@dimen/dp_20"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/sp_20"/>
+        android:background="?attr/colorPrimary">
 
-    <LinearLayout
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:layout_alignParentTop="true"
+            android:background="?attr/colorPrimary"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp_20"
+            android:paddingRight="@dimen/dp_20"
+            android:textColor="@android:color/white"
+            android:text="2016-8-5"
+            android:textSize="@dimen/sp_20"/>
+
+        <ImageButton
+            android:id="@+id/btnFilter"
+            style="@style/Widget.AppCompat.ActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_filter_list"/>
+
+    </RelativeLayout>
+
+    <ListView
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tvDate"
+        android:layout_below="@+id/linear"
         android:orientation="vertical"/>
 
 
     <FrameLayout
+        android:id="@+id/emptyView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tvDate"
-        android:id="@+id/emptyView"
+        android:layout_below="@+id/linear"
         android:visibility="invisible">
+
         <TextView
             android:layout_width="@dimen/dp_300"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/rest"
+            android:layout_gravity="center"
             android:drawablePadding="@dimen/dp_10"
-            android:text="@string/nothing_here_have_a_rest"
-            android:textSize="@dimen/sp_20"
+            android:drawableTop="@drawable/rest"
             android:gravity="center_horizontal"
-            android:layout_gravity="center"/>
+            android:text="@string/nothing_here_have_a_rest"
+            android:textSize="@dimen/sp_20"/>
     </FrameLayout>
 
 

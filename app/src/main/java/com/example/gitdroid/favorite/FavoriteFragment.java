@@ -125,47 +125,47 @@ public class FavoriteFragment extends Fragment implements PopupMenu.OnMenuItemCl
     //当前操作的仓库（上下文菜单）
     private LocalRepo currentLocalRepo;
 
-//    @Override
-//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//        if (v.getId() == R.id.listView){
-//            //得到当前ListView的ContextMenu，选中时选择的位置
-//            AdapterView.AdapterContextMenuInfo adapterMenuInfo = (AdapterView.AdapterContextMenuInfo) menuInfo;
-//            int position = adapterMenuInfo.position;
-//            currentLocalRepo = adapter.getItem(position);
-//            //添加contextMenu的内容
-//            MenuInflater menuInflater = getActivity().getMenuInflater();
-//            menuInflater.inflate(R.menu.menu_context_favorite, menu);
-//            //拿到子菜单，添加内容
-//            SubMenu subMenu = menu.findItem(R.id.sub_menu_move).getSubMenu();
-//            List<RepoGroup> repoGroups = repoGroupDao.queryForAll();
-//            //都添加到menu_group_move这个组上
-//            for (RepoGroup repoGroup : repoGroups){
-//                menu.add(R.id.menu_group_move,repoGroup.getId(), Menu.NONE, repoGroup.getName());
-//            }
-//        }
-//    }
-
-    @Override public void onCreateContextMenu(
-            ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        if (v.getId() == R.id.listView) {
-            // 得到当前ListView的ContextMenu，选中时选择的位置
+        if (v.getId() == R.id.listView){
+            //得到当前ListView的ContextMenu，选中时选择的位置
             AdapterView.AdapterContextMenuInfo adapterMenuInfo = (AdapterView.AdapterContextMenuInfo) menuInfo;
             int position = adapterMenuInfo.position;
             currentLocalRepo = adapter.getItem(position);
-            // 添加ContextMenu的内容
+            //添加contextMenu的内容
             MenuInflater menuInflater = getActivity().getMenuInflater();
             menuInflater.inflate(R.menu.menu_context_favorite, menu);
-            // 拿到子菜单,添加内容
+            //拿到子菜单，添加内容
             SubMenu subMenu = menu.findItem(R.id.sub_menu_move).getSubMenu();
             List<RepoGroup> repoGroups = repoGroupDao.queryForAll();
-            // 都添加到menu_group_move这个组上
-            for (RepoGroup repoGroup : repoGroups) {
-                subMenu.add(R.id.menu_group_move, repoGroup.getId(), Menu.NONE, repoGroup.getName());
+            //都添加到menu_group_move这个组上
+            for (RepoGroup repoGroup : repoGroups){
+                subMenu.add(R.id.menu_group_move,repoGroup.getId(), Menu.NONE, repoGroup.getName());
             }
         }
     }
+
+//    @Override public void onCreateContextMenu(
+//            ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+//        super.onCreateContextMenu(menu, v, menuInfo);
+//        if (v.getId() == R.id.listView) {
+//            // 得到当前ListView的ContextMenu，选中时选择的位置
+//            AdapterView.AdapterContextMenuInfo adapterMenuInfo = (AdapterView.AdapterContextMenuInfo) menuInfo;
+//            int position = adapterMenuInfo.position;
+//            currentLocalRepo = adapter.getItem(position);
+//            // 添加ContextMenu的内容
+//            MenuInflater menuInflater = getActivity().getMenuInflater();
+//            menuInflater.inflate(R.menu.menu_context_favorite, menu);
+//            // 拿到子菜单,添加内容
+//            SubMenu subMenu = menu.findItem(R.id.sub_menu_move).getSubMenu();
+//            List<RepoGroup> repoGroups = repoGroupDao.queryForAll();
+//            // 都添加到menu_group_move这个组上
+//            for (RepoGroup repoGroup : repoGroups) {
+//                subMenu.add(R.id.menu_group_move, repoGroup.getId(), Menu.NONE, repoGroup.getName());
+//            }
+//        }
+//    }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
